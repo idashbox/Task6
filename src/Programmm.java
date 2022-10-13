@@ -17,40 +17,32 @@ public class Programmm {
         int n = scanner.nextInt();
         System.out.print("Введите значение e: ");
         double e = scanner.nextDouble();
-        System.out.printf("Сумма n слагаемых: %f%n", sum1(x, n));
-        System.out.printf("Сумма слагаемых, больших e: %f%n", sum2(x, e, n));
-        System.out.printf("Сумма слагаемых, больших e/10: %f%n", sum3(x, e, n));
-        System.out.printf("Значение функции с помощью методов Math: %f%n", sum4(x));
+        System.out.printf("Сумма n слагаемых: %f%n", sum1(x, e, n)[0]);
+        System.out.printf("Сумма слагаемых, больших e: %f%n", sum1(x, e, n)[1]);
+        System.out.printf("Сумма слагаемых, больших e/10: %f%n", sum1(x, e, n)[2]);
+        System.out.printf("Значение функции с помощью методов Math: %f%n", sum2(x));
         System.out.println(1/Math.sqrt(2));
     }
-    static double sum1(double x, int n) {
-        double sum = 1;
+    static double[] sum1(double x, double e, int n) {
         double mult = 1;
         double num;
+        double sumE1 = 1;
+        double sumE2 = 1;
+        double sum = 1;
         for (int i = 1; i < n; i += 2) {
             num = -(x * i/(i+1));
+            if (Math.abs(mult) > e){
+                sumE1 += mult;
+            }
+            if (Math.abs(mult) > e/10){
+                sumE2 += mult;
+            }
             sum += mult * num;
             mult = mult * num;
         }
-        return sum;
+        return new double[] {sum, sumE1, sumE2};
     }
-    static double sum2(double x, double e, int n) {
-        double mult = 1;
-        double num;
-        double sumE = 1;
-        for (int i = 1; i < n; i += 2) {
-            num = -(x * i/(i+1));
-            mult = mult * num;
-            if (Math.abs(mult) > e){
-                sumE += mult;
-            }
-        }
-        return sumE;
-    }
-    static double sum3(double x, double e, int n) {
-        return sum2(x, e / 10, n);
-    }
-    static double sum4(double x) {
+    static double sum2(double x) {
         double mult = 1;
         double num;
         double sum = 1;
